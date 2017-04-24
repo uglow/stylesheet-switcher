@@ -9,6 +9,10 @@ node_js:
 matrix:
   fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
 
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
+env:
+  - CXX=g++-4.8
+
 addons:
   firefox: "45.0"
   apt:

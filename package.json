@@ -55,7 +55,7 @@
     "verify:js:fix": "eslint --fix -c config/verify/.eslintrc \"src/**/*.js\" \"src/**/*.jsx\" \"unitTest/**/*.js\" \"unitTest/**/*.jsx\" \"config/**/*.js\" \"config/**/*.jsx\" && echo ✅ verify:js:fix success",
     "verify:js:watch": "chokidar 'src/**/*.js' 'src/**/*.jsx' 'unitTest/**/*.js' 'unitTest/**/*.jsx' 'config/**/*.js' 'config/**/*.jsx' -c 'npm run verify:js:fix' --initial --silent",
     "verify:watch": "npm-run-all --parallel verify:js:watch verify:css:watch --silent",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post && npm run docs:publish"
   },
   "config": {
     "commitizen": {
