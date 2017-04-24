@@ -128,7 +128,7 @@
     "semantic-release": "6.3.2"
   },
   "engines": {
-    "node": ">=4.x",
+    "node": ">=6.x",
     "npm": ">=3.9.5"
   }
 }
