@@ -1,0 +1,43 @@
+sudo: false
+language: node_js
+
+node_js:
+  - '7'
+  - '6'
+  - '4'
+
+matrix:
+  fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
+
+addons:
+  firefox: "45.0"
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+install:
+  - npm install
+
+before_script:
+  # Allow Firefox to run in virtual frame buffer
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
+
+script:
+  - npm run pre-release
+
+after_success:
+  - npm run upload-coverage
+  - npm run semantic-release
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+
+notifications:
+  email:
+    recipients:
+      - u_glow@hotmail.com

@@ -1,0 +1,23 @@
+# START_CONFIT_GENERATED_CONTENT
+title: stylesheet-switcher
+repo: https://github.com/uglow/stylesheet-switcher.git
+version: 0.0.0
+src: docs
+output: webdocs
+# serverPath will only be set when publishing the documentation
+serverPath:
+# END_CONFIT_GENERATED_CONTENT
+
+theme: docs/themes/test-theme
+#snippets: docs/snippets
+
+sections:
+  - title: Stylesheet Switcher
+    content:
+      - src: docs/content/01-overview.md
+      - title: Usage
+        src: docs/content/component-doc.js
+        preprocessor:
+          swanky-processor-ngdocs: {}
+
+

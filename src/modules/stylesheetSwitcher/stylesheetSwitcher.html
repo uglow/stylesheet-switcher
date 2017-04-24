@@ -1,0 +1,66 @@
+<div>
+  <label for="{{id}}_select">{{label || ''}}</label>
+  <select ref:selectElem id="{{id}}_select" on:change="switchStyleSheet(this.value)">
+    {{#each stylesheets as sheet}}
+    <option value="{{sheet.label}}">{{sheet.label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<script>
+  // This is a test of the Svelte framework to evaluate how it can be integrated with other frameworks
+  // like Angular and React.
+  // It compiles to plain JS, which means it is a lot more portable than a framework-based component.
+  // But code coverage with Istanbul is challenging at the moment.
+  // Worst comes to worst, it should be simple to convert this to n Angular 1.x component.
+  let ssMap = new Map();
+
+  function setSelectedStyleSheet(keyName, value) {
+    window.sessionStorage.setItem(keyName, value);
+  }
+
+  function getSelectedStyleSheet(keyName) {
+    return window.sessionStorage.getItem(keyName);
+  }
+
+  export default {
+    oncreate() {
+      let selectElem = this.refs.selectElem;
+      let persistedValue = getSelectedStyleSheet(this.get('persistenceKeyName'));
+
+      this.observe('stylesheets', (sheets) => {
+        ssMap.clear();
+        sheets.forEach(sheet => {
+          ssMap.set(sheet.label, document.head.querySelector(`link[rel="stylesheet"][href*="${sheet.linkHrefContains}"]`))
+        });
+
+        if (persistedValue && ssMap.has(persistedValue)) {
+          this.switchStyleSheet(persistedValue);
+
+          // Update the drop-down to match the initial value
+          [...selectElem.options].forEach((option, index) => {
+            if (option.value === persistedValue) {
+              selectElem.selectedIndex = index;
+            }
+          });
+        } else if (ssMap.size > 0) {
+          setSelectedStyleSheet(this.get('persistenceKeyName'), ssMap.keys().next().value);   // Get the first key
+        }
+      });
+    },
+    data() {
+      return {
+        stylesheets: [],      // Element is an object: {label: <string>, linkHrefContains: <string>}
+        label: 'Stylesheet:',
+        id: 'sss_' + (new Date().getTime()),
+        persistenceKeyName: '__stylesheetSwitcher'
+      };
+    },
+    methods: {
+      switchStyleSheet(selectedKey) {
+        ssMap.forEach((value, key) => value.disabled = (key !== selectedKey));
+        setSelectedStyleSheet(this.get('persistenceKeyName'), selectedKey);
+      }
+    }
+  };
+</script>

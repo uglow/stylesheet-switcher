@@ -1,0 +1,31 @@
+{% include '../partials/header.html' -%}
+
+{% if meta.repository %}
+    <a href="{$ meta.repository $}" title="{$ meta.title $} Github Repo" target="_blank" class="{$ styles.github $}"></a>
+{% endif %}
+
+
+<section class="{$ styles.main $}">
+    <article>
+        {% if parentKey %}
+            {% for item in meta.navigation %}
+                {% if item.key == parentKey %}
+                    <h1 class="{$ styles['page-header'] $} {$ styles.h1 $}" data-gumshoe-header>{$ item.title $}</h1>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h1 class="{$ styles['page-header'] $} {$ styles.h1 $}" data-gumshoe-header>{$ title $}</h1>
+        {% endif %}
+
+        {% for item in contents %}
+            {$ item.content $}
+        {% endfor %}
+
+      <div class="{$ styles['guide-links'] $}">
+        {% if previousPage %}<a href="/{$ previousPage.url $}" class="{$ styles.a $} {$ styles.previous $}">← {$ previousPage.title $}</a>{% endif %}
+        {% if nextPage %}<a href="/{$ nextPage.url $}" class="{$ styles.a $} {$ styles.next $}">{$ nextPage.title $} →</a>{% endif %}
+      </div>
+    </article>
+</section>
+
+{% include '../partials/footer.html' -%}
