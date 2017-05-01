@@ -1,5 +1,7 @@
 node_modules/
 dev/
-dist/
+dist/css/
+dist/*.html
+dist/js/testHarness.*
 reports/
 webdocs/

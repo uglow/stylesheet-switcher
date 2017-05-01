@@ -38,7 +38,7 @@
  * @usage
  * ```html
  * <script>
- *   new StylesheetSwitcher({
+ *   var comp = new StylesheetSwitcher({
  *     target: document.querySelector('test-ssswitcher'),
  *     data: {
  *       id: 'mySSS',
@@ -49,6 +49,9 @@
  *       ],
  *     },
  *   });
+ *
+ *   comp.on('selectionChange', console.log);
+ *   comp.setSelected('Light');
  * </script>
  * <style>
  *   test-ssswitcher div {
@@ -73,4 +76,10 @@
  * @param {string=} [label=Theme] - Label to display beside the component
  * @param {string=} [persistenceKeyName=__stylesheetSwitcher] - SessionStorage key name to persist selected option
  *
+ * // In lieu of better documentation engine, document the API as "params", so that at least it shows up
+ * @param {Function} setSelected() - Sets the selected value
+ * @param {Function} getSelected() - Returns the selected value (the label of the selected stylesheet)
+ *
+ * @param {event} selectionChange - Returns an object with a `value` property set to the `label` of the selected stylesheet
  */
+
