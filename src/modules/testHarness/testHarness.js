@@ -2,7 +2,7 @@ import StyleSheetSwitcher from '../stylesheetSwitcher/stylesheetSwitcher.html';
 
 import './styles/app.styl';
 
-new StyleSheetSwitcher({
+let comp = new StyleSheetSwitcher({
   target: document.querySelector('test-component'),
   data: {
     id: 'mySSS',
@@ -14,6 +14,8 @@ new StyleSheetSwitcher({
   },
 });
 
+
+comp.on('selectionChange', console.log);
 
 // Hot module reloading for Webpack
 if (module.hot) {

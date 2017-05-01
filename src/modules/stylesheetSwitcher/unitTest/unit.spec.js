@@ -106,22 +106,51 @@ describe('StylesheetSwitcher', () => {
   });
 
   it('should persist the selected stylesheet into sessionStorage by default', () => {
-    createComponent({stylesheets: [
+    let comp = createComponent({stylesheets: [
       {label: 'Foo', linkHrefContains: 'foo'},
       {label: 'Bar', linkHrefContains: 'bar'},
     ]});
 
     expect(sessionStorage.getItem('__stylesheetSwitcher')).toEqual('Foo');
+    expect(comp.getSelected()).toEqual('Foo');
   });
 
 
   it('should show the correct selected option when the persisted option is not the first stylesheet', () => {
     sessionStorage.setItem('__stylesheetSwitcher', 'Bar');
-    createComponent({stylesheets: [
+    let comp = createComponent({stylesheets: [
       {label: 'Foo', linkHrefContains: 'foo'},
       {label: 'Bar', linkHrefContains: 'bar'},
     ]});
 
     expectSelectValue('Bar');
+    expect(comp.getSelected()).toEqual('Bar');
+  });
+
+
+  it('should be possible to change the selectedItem through the setSelected() method', () => {
+    let spy = jasmine.createSpy('selectionSpy');
+    let comp = createComponent({stylesheets: [
+      {label: 'Foo', linkHrefContains: 'foo'},
+      {label: 'Bar', linkHrefContains: 'bar'},
+    ]});
+    comp.on('selectionChange', spy);
+
+    expectSelectValue('Foo');
+    expect(comp.getSelected()).toEqual('Foo');
+    expect(spy).not.toHaveBeenCalled();   // The listener is not attached when the first event is fired.
+
+    comp.setSelected('Bar');
+    expectSelectValue('Bar');
+    expect(comp.getSelected()).toEqual('Bar');
+    expect(spy).toHaveBeenCalledWith({value: 'Bar'});   // Now it is
+    expect(spy.calls.count()).toEqual(1);
+
+    comp.setSelected('Bar');
+    expect(spy.calls.count()).toEqual(1);       // No change
+
+    comp.setSelected('Foo');
+    expect(spy.calls.count()).toEqual(2);
+    expect(spy.calls.argsFor(1)[0]).toEqual({value: 'Foo'});
   });
 });

@@ -1,6 +1,6 @@
 <div>
   <label for="{{id}}_select">{{label || ''}}</label>
-  <select ref:selectElem id="{{id}}_select" on:change="switchStyleSheet(this.value)">
+  <select ref:selectElem id="{{id}}_select" on:change="setSelected(this.value)">
     {{#each stylesheets as sheet}}
     <option value="{{sheet.label}}">{{sheet.label}}</option>
     {{/each}}
@@ -25,7 +25,6 @@
 
   export default {
     oncreate() {
-      let selectElem = this.refs.selectElem;
       let persistedValue = getSelectedStyleSheet(this.get('persistenceKeyName'));
 
       this.observe('stylesheets', (sheets) => {
@@ -35,31 +34,47 @@
         });
 
         if (persistedValue && ssMap.has(persistedValue)) {
-          this.switchStyleSheet(persistedValue);
-
-          // Update the drop-down to match the initial value
-          [...selectElem.options].forEach((option, index) => {
-            if (option.value === persistedValue) {
-              selectElem.selectedIndex = index;
-            }
-          });
+          this.setSelected(persistedValue);
         } else if (ssMap.size > 0) {
-          setSelectedStyleSheet(this.get('persistenceKeyName'), ssMap.keys().next().value);   // Get the first key
+          // Set selected value to first value in the list (no need to update UI)
+          this.setSelected(ssMap.keys().next().value, false);
         }
       });
     },
     data() {
-      return {
+      let obj = {
         stylesheets: [],      // Element is an object: {label: <string>, linkHrefContains: <string>}
         label: 'Stylesheet:',
         id: 'sss_' + (new Date().getTime()),
         persistenceKeyName: '__stylesheetSwitcher'
       };
+
+      return obj;
     },
     methods: {
-      switchStyleSheet(selectedKey) {
+      setSelected(selectedKey, updateUI = true) {
         ssMap.forEach((value, key) => value.disabled = (key !== selectedKey));
         setSelectedStyleSheet(this.get('persistenceKeyName'), selectedKey);
+
+        let selectElem = this.refs.selectElem;
+
+        // ONLY fire a change-event if the selection changes
+        if (selectElem.options[selectElem.selectedIndex].value !== selectedKey) {
+          this.fire('selectionChange', {value: selectedKey});
+        }
+
+        if (updateUI) {
+          // Update the drop-down to match the initial value
+          [...selectElem.options].forEach((option, index) => {
+            if (option.value === selectedKey) {
+              selectElem.selectedIndex = index;
+            }
+          });
+        }
+      },
+      getSelected() {
+        let selectElem = this.refs.selectElem;
+        return selectElem.options[selectElem.selectedIndex].value;
       }
     }
   };
