@@ -15,17 +15,17 @@
   // Worst comes to worst, it should be simple to convert this to n Angular 1.x component.
   let ssMap = new Map();
 
-  function setSelectedStyleSheet(keyName, value) {
+  function persistSelectedStyleSheet(keyName, value) {
     window.sessionStorage.setItem(keyName, value);
   }
 
-  function getSelectedStyleSheet(keyName) {
+  function retrieveSelectedStyleSheet(keyName) {
     return window.sessionStorage.getItem(keyName);
   }
 
   export default {
     oncreate() {
-      let persistedValue = getSelectedStyleSheet(this.get('persistenceKeyName'));
+      let persistedValue = retrieveSelectedStyleSheet(this.get('persistenceKeyName'));
 
       this.observe('stylesheets', (sheets) => {
         ssMap.clear();
@@ -54,14 +54,11 @@
     methods: {
       setSelected(selectedKey, updateUI = true) {
         ssMap.forEach((value, key) => value.disabled = (key !== selectedKey));
-        setSelectedStyleSheet(this.get('persistenceKeyName'), selectedKey);
+        persistSelectedStyleSheet(this.get('persistenceKeyName'), selectedKey);
 
         let selectElem = this.refs.selectElem;
 
-        // ONLY fire a change-event if the selection changes
-        if (selectElem.options[selectElem.selectedIndex].value !== selectedKey) {
-          this.fire('selectionChange', {value: selectedKey});
-        }
+        this.fire('selectionChange', {value: selectedKey});
 
         if (updateUI) {
           // Update the drop-down to match the initial value
