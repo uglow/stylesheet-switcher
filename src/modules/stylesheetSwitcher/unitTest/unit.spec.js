@@ -147,10 +147,10 @@ describe('StylesheetSwitcher', () => {
     expect(spy.calls.count()).toEqual(1);
 
     comp.setSelected('Bar');
-    expect(spy.calls.count()).toEqual(1);       // No change
+    expect(spy.calls.count()).toEqual(2);       // Fired again
 
     comp.setSelected('Foo');
-    expect(spy.calls.count()).toEqual(2);
-    expect(spy.calls.argsFor(1)[0]).toEqual({value: 'Foo'});
+    expect(spy.calls.count()).toEqual(3);
+    expect(spy.calls.argsFor(2)[0]).toEqual({value: 'Foo'});
   });
 });

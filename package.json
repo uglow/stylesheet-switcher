@@ -9,7 +9,7 @@
   },
   "main": "dist/js/component.es5.js",
   "files": [
-    "dist/js/component.es5.js",
+    "dist/js/component.es5.*",
     "src",
     "*.md"
   ],
