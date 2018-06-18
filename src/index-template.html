@@ -8,11 +8,12 @@
   <base href="/">
   <title>ES6 Demo App</title>
 
-  <!-- Die frame! DIE! http://en.wikipedia.org/wiki/Framekiller -->
-  <style>html{display:none}</style>
   <% htmlWebpackPlugin.files.css.forEach(function(cssFile) { %>
   <link href="<%= cssFile %>" rel="stylesheet">
   <% }); %>
+
+  <!-- Die frame! DIE! http://en.wikipedia.org/wiki/Framekiller -->
+  <style>html{display:none}</style>
   <script>
     if (window.self !== window.top) {
       window.top.location.href = window.location.href;
@@ -21,6 +22,30 @@
     }
   </script>
 
+  <!-- SSwitcher can also work with <style> blocks -->
+  <style disabled>
+    /* red-style */
+    body {
+      background: #000;
+      color: #f00;
+    }
+
+    h1 {
+      color: #f00;
+    }
+  </style>
+
+  <style disabled>
+    /* green-style */
+    body {
+      background: #fff;
+      color: #0f0;
+    }
+
+    h1 {
+      color: #0f0;
+    }
+  </style>
 </head>
 <body>
 

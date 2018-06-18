@@ -26,7 +26,7 @@ let karmaConfig = {
   basePath: '../../',
 
   // testing framework to use (jasmine/mocha/qunit/...)
-  frameworks: ['jasmine', 'es6-shim'],
+  frameworks: ['jasmine'],
 
   // list of files / patterns to exclude
   exclude: [],
@@ -37,12 +37,10 @@ let karmaConfig = {
   // Start these browsers, currently available:
   // - Chrome, ChromeCanary, Firefox, Opera, Safari (only Mac), PhantomJS, IE (only Windows)
   browsers: [
-    'PhantomJS'
+    'Chrome', //ChromeHeadless
   ],
 
   plugins: [
-    'karma-phantomjs-launcher',
-    'karma-es6-shim',
     'karma-jasmine',
     'karma-junit-reporter',
     'karma-coverage',
@@ -53,7 +51,6 @@ let karmaConfig = {
   ],
 
   files: [
-    'node_modules/phantomjs-polyfill/bind-polyfill.js',
     'config/testUnit/test.files.js'
   ],
 

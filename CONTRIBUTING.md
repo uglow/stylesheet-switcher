@@ -40,8 +40,7 @@ stylesheet-switcher/
  │           ├──styles/           * css source code for this module
  │           ├──template/         * HTML templates for this module
  │           ├──systemTest/       * system test specs for this module
- │           ├──unitTest/         * unit test specs for this module
- │           └──                  * visual regression test specs for this module (if enabled)
+ │           └──unitTest/         * unit test specs for this module
  │
  ├──dev/                          * development-build code is output here (Webpack may keep it in memory for speed)
  ├──dist/                         * production-build code is output here

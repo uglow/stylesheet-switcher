@@ -9,10 +9,8 @@
 
 <script>
   // This is a test of the Svelte framework to evaluate how it can be integrated with other frameworks
-  // like Angular and React.
-  // It compiles to plain JS, which means it is a lot more portable than a framework-based component.
-  // But code coverage with Istanbul is challenging at the moment.
-  // Worst comes to worst, it should be simple to convert this to n Angular 1.x component.
+
+  // Create a map of all the stylesheets, so we can enable one of them and disable the others
   let ssMap = new Map();
 
   function persistSelectedStyleSheet(keyName, value) {
@@ -23,14 +21,32 @@
     return window.sessionStorage.getItem(keyName);
   }
 
+  function findStyleRuleContainingText(styleBlocksArray, searchText) {
+    const matching = styleBlocksArray
+      .filter(sheet => (sheet.textContent || '').indexOf(searchText) > -1);
+
+    return (matching.length === 1) ? matching : null; // We can match multiple <style> elements. handle this case inside setSelected()
+  }
+
   export default {
     oncreate() {
       let persistedValue = retrieveSelectedStyleSheet(this.get('persistenceKeyName'));
 
       this.observe('stylesheets', (sheets) => {
+        const styleBlocksArr = [].slice.call(document.querySelectorAll('style')); // Calculate this once
+
         ssMap.clear();
         sheets.forEach(sheet => {
-          ssMap.set(sheet.label, document.head.querySelector(`link[rel="stylesheet"][href*="${sheet.linkHrefContains}"]`))
+          // v2.0 behaviour was all stylesheets were <link> elements.
+          // v2.1 behaviour means that a stylesheet can also be in a <style> tag.
+          if (sheet.linkHrefContains) {
+            // <link> elements must be inside the <head> element. This also makes unit testing easier (as we can just mock document.head.querySelector)
+            ssMap.set(sheet.label, document.head.querySelector(`link[rel="stylesheet"][href*="${sheet.linkHrefContains}"]`));
+          } else if (sheet.styleElemContains) {
+            ssMap.set(sheet.label, findStyleRuleContainingText(styleBlocksArr, sheet.styleElemContains));
+          } else {
+            throw new Error(`StyleSheetSwitcher.sheets."${sheet}" must contain a "linkHrefContains" property or a "styleElemContains" property which identifies the link/style element to control`);
+          }
         });
 
         if (persistedValue && ssMap.has(persistedValue)) {
@@ -53,7 +69,14 @@
     },
     methods: {
       setSelected(selectedKey, updateUI = true) {
-        ssMap.forEach((value, key) => value.disabled = (key !== selectedKey));
+        ssMap.forEach((styleSheetOrArray, key) => {
+          // Handle either a single style or an array or styles:
+          if (styleSheetOrArray && styleSheetOrArray.length) {
+            styleSheetOrArray.forEach(style => style.disabled = (key !== selectedKey));
+          } else {
+            styleSheetOrArray.disabled = (key !== selectedKey);
+          }
+        });
         persistSelectedStyleSheet(this.get('persistenceKeyName'), selectedKey);
 
         let selectElem = this.refs.selectElem;

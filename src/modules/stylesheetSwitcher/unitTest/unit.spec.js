@@ -6,6 +6,8 @@ describe('StylesheetSwitcher', () => {
   beforeEach(() => {
     testElem = document.createElement('test');
     document.body.appendChild(testElem);
+    // Replace document.head.querySelector() with a mock that returns a fake stylesheet
+    // If you mock the more-general document.querySelector, things break.
     document.head.querySelector = jasmine.createSpy('qsa').and.returnValue({disabled: false});
   });
 
