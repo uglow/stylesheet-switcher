@@ -8,8 +8,10 @@ let comp = new StyleSheetSwitcher({
     id: 'mySSS',
     label: 'Theme:',
     stylesheets: [
-      {label: 'Dark', linkHrefContains: 'dark'},
-      {label: 'Light', linkHrefContains: 'light'},
+      {label: 'Dark Link Element', linkHrefContains: 'dark'},
+      {label: 'Light Link Element', linkHrefContains: 'light'},
+      {label: 'Red Style Element', styleElemContains: '/* red-style */'},
+      {label: 'Green Style Element', styleElemContains: '/* green-style */'},
     ],
   },
 });
