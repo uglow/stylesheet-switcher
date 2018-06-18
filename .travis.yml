@@ -43,7 +43,7 @@ script:
 
 after_success:
   #- npm run upload-coverage  # disabled due to tests being disabled
-  - npm run semantic-release
+  - npm run travis-deploy-once "npm run semantic-release"
 
 branches:
   except:
