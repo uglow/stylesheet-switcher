@@ -97,7 +97,7 @@
     "jasmine-reporters": "2.2.0",
     "jasmine-spec-reporter": "3.2.0",
     "js-yaml": "3.7.0",
-    "karma": "1.4.1",
+    "karma": "1.7.1",
     "karma-chrome-launcher": "2.0.0",
     "karma-coverage": "1.1.1",
     "karma-es6-shim": "1.0.0",
