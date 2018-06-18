@@ -12,7 +12,7 @@
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <link rel="stylesheet" href="dist/css/dark.css">
     <link rel="stylesheet" href="dist/css/light.css">
-<link rel="shortcut icon" href="/stylesheet-switcher/favicon.ico"><link href="/stylesheet-switcher/snippets.424eeec0.css" rel="stylesheet"><link href="/stylesheet-switcher/theme.424eeec0.css" rel="stylesheet"><link href="/stylesheet-switcher/docs.424eeec0.css" rel="stylesheet"></head>
+<link rel="shortcut icon" href="/stylesheet-switcher/favicon.ico"><link href="/stylesheet-switcher/snippets.886980a0.css" rel="stylesheet"><link href="/stylesheet-switcher/theme.886980a0.css" rel="stylesheet"><link href="/stylesheet-switcher/docs.886980a0.css" rel="stylesheet"></head>
 
 <body>
     <div class="index_outer-wrap__1vW7y">
@@ -29,7 +29,7 @@
         
 
         
-            <section id="sid-v7ocszbz" class="index_section__2eRdj">
+            <section id="sid-v2kr9yzo" class="index_section__2eRdj">
     
 
     <div class="index_lead__23C4T "><p class="index_p__1NOy6">Stylesheet Switcher is a JS component that can switch-on one stylesheet from a set of stylesheets. This
@@ -66,30 +66,32 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
 
   
       <h4 class="index_h4__1f8cv">Example</h4><div class="index_code-preview__1Knik component-example-StylesheetSwitcher">
-          <p><test-ssswitcher></test-ssswitcher></p>
+          <p><div class="test-switcher-example"></div></p>
 <p><style>
-  test-ssswitcher div {
+  .test-switcher-example div {
     display: inline-block;
     background: yellow;
     padding: 5px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.2) -2px 2px 10px;
   }
-  test-ssswitcher label {
+  .test-switcher-example label {
     display: block;
     color: #000;
   }
 </style></p>
+<p><style>christmas {} body{background:#0d0} body,h1{color:#f00}</style></p>
 <script src="dist/js/component.es5.js"></script>
 <script>
   new window.StylesheetSwitcher.default({
-    target: document.querySelector('test-ssswitcher'),
+    target: document.querySelector('.test-switcher-example'),
     data: {
       id: 'mySSS',
       label: 'Theme:',
       stylesheets: [
-        {label: 'Dark', linkHrefContains: 'dark'},
         {label: 'Light', linkHrefContains: 'light'},
+        {label: 'Dark', linkHrefContains: 'dark'},
+        {label: 'Christmas', styleElemContains: 'christmas'},
       ],
     },
   });
@@ -109,15 +111,37 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
           </div>
         </div>
         <div class="index_code-wrapper__3jGNE sd-panel">
-          <pre><code class="lang-html">&lt;script&gt;
+          <pre><code class="lang-html">&lt;!-- nominate a HTML element which will host the switcher: --&gt;
+&lt;div class=&quot;test-switcher&quot;&gt;&lt;/div&gt;
+
+&lt;style&gt;
+  .test-switcher div {
+    display: inline-block;
+    background: yellow;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.2) -2px 2px 10px;
+  }
+  .test-switcher label {
+    display: block;
+    color: #000;
+  }
+&lt;/style&gt;
+
+&lt;style&gt;christmas {} body{background:#0d0} body,h1{color:#f00}&lt;/style&gt;
+
+ES5 example code:
+&lt;script src=&quot;path/to/dist/js/component.es5.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
   var comp = new StylesheetSwitcher({
-    target: document.querySelector(&#39;test-ssswitcher&#39;),
+    target: document.querySelector(&#39;.test-switcher&#39;),
     data: {
       id: &#39;mySSS&#39;,
       label: &#39;Theme:&#39;,
       stylesheets: [
-        {label: &#39;Light&#39;, linkHrefContains: &#39;light&#39;},
+        {label: &#39;Light&#39;, styleElemContains: &#39;light&#39;},
         {label: &#39;Dark&#39;, linkHrefContains: &#39;dark&#39;},
+        {label: &#39;Christmas&#39;, styleElemContains: &#39;christmas&#39;},
       ],
     },
   });
@@ -125,19 +149,25 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
   comp.on(&#39;selectionChange&#39;, console.log);
   comp.setSelected(&#39;Light&#39;);
 &lt;/script&gt;
-&lt;style&gt;
-  test-ssswitcher div {
-    display: inline-block;
-    background: yellow;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.2) -2px 2px 10px;
-  }
-  test-ssswitcher label {
-    display: block;
-    color: #000;
-  }
-&lt;/style&gt;
+
+
+ES6 example code (inside &quot;any-file.js&quot;):
+import stylesheetSwitcher from &#39;stylesheet-switcher&#39;;
+
+const comp = new StylesheetSwitcher({
+  target: document.querySelector(&#39;.test-switcher&#39;),
+  data: {
+    id: &#39;mySSS&#39;,
+    label: &#39;Theme:&#39;,
+    stylesheets: [
+      {label: &#39;Light&#39;, styleElemContains: &#39;light&#39;},
+      {label: &#39;Dark&#39;, linkHrefContains: &#39;dark&#39;},
+    ],
+  },
+});
+
+comp.on(&#39;selectionChange&#39;, console.log);
+comp.setSelected(&#39;Light&#39;);
 </code></pre>
 
         </div>
@@ -172,7 +202,7 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
         <a href="" class="label type-hint type-hint-object index_a__oUQfl">Object[]</a>
       </td>
       <td class="index_td__tHvQN">
-        <p>List of stylesheets to switch between</p>
+        <p>List of stylesheets to switch between. These <em>must</em> be inside the &lt;head&gt; element.</p>
 
         
       </td>
@@ -204,8 +234,25 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
         <a href="" class="label type-hint type-hint-string index_a__oUQfl">string</a>
       </td>
       <td class="index_td__tHvQN">
-        <p>A string that should appear withing the <link href="..."> attribute.
+        <p>A string that should appear withing the &lt;link href=&quot;...&quot;&gt; attribute.
   Used to uniquely identify the <link> element so that the component can enable and disable it</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr class="index_tr__Fj0bf">
+      <td class="index_td__tHvQN">
+        stylesheets[].styleElemContains
+        
+        
+      </td>
+      <td class="index_td__tHvQN">
+        <a href="" class="label type-hint type-hint-string index_a__oUQfl">string</a>
+      </td>
+      <td class="index_td__tHvQN">
+        <p>A string that should appear withing the &lt;style&gt; element itself.
+  Best practice would be to include a comment inside the beginning of the &lt;style&gt; element&#39;s text-node.</p>
 
         
       </td>
@@ -330,9 +377,9 @@ behaviour is useful when rendering a web site that supports multiple themes.</p>
 
             <footer class="">
                 
-                    <div class="index_version__xY3_Z">version 2.0.1</div>
+                    <div class="index_version__xY3_Z">version 2.1.0</div>
                 
             </footer>
         </div>
-    <script type="text/javascript" src="/stylesheet-switcher/snippets.424eeec0.bundle.js"></script><script type="text/javascript" src="/stylesheet-switcher/theme.424eeec0.bundle.js"></script><script type="text/javascript" src="/stylesheet-switcher/docs.424eeec0.bundle.js"></script></body>
+    <script type="text/javascript" src="/stylesheet-switcher/snippets.886980a0.bundle.js"></script><script type="text/javascript" src="/stylesheet-switcher/theme.886980a0.bundle.js"></script><script type="text/javascript" src="/stylesheet-switcher/docs.886980a0.bundle.js"></script></body>
 </html>
