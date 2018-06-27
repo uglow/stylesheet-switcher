@@ -3,7 +3,7 @@
 
 <!--[]-->
 <!--[RM_DESCRIPTION]-->
-> A simple JS component for switching between a list of stylesheets on a website.
+> A simple JS component for switching between a list of stylesheets (or style elements) on a website.
 
 <!--[]-->
 
