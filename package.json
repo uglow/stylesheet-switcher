@@ -112,7 +112,7 @@
     "postcss-loader": "1.2.2",
     "protractor": "3.3.0",
     "rimraf": "2.5.4",
-    "semantic-release": "15.5.4",
+    "semantic-release": "15.6.0",
     "serve": "1.4.0",
     "serve-https": "1.5.3",
     "style-loader": "0.13.1",
