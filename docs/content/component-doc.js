@@ -102,9 +102,9 @@
  * @param {Object[]} stylesheets  - List of stylesheets to switch between. These *must* be inside the &lt;head&gt; element.
  * @param {string} stylesheets[].label  - The display name of the stylesheet
  * @param {string} stylesheets[].linkHrefContains  - A string that should appear withing the &lt;link href="..."&gt; attribute.
- *   Used to uniquely identify the <link> element so that the component can enable and disable it
- * @param {string} stylesheets[].styleElemContains  - A string that should appear withing the &lt;style&gt; element itself.
- *   Best practice would be to include a comment inside the beginning of the &lt;style&gt; element's text-node.
+ *   Used to identify the <link> element(s) that the component should enable and disable
+ * @param {string} stylesheets[].styleElemContains  - A string that should appear withing &lt;style&gt; element(s).
+ *   Best practice would be to include a comment at the top of the &lt;style&gt; element's content.
  * @param {string=} [id=mySSS] - Id attribute of the component (in case you need to use multiple instances on the same page)
  * @param {string=} [label=Theme] - Label to display beside the component
  * @param {string=} [persistenceKeyName=__stylesheetSwitcher] - SessionStorage key name to persist selected option

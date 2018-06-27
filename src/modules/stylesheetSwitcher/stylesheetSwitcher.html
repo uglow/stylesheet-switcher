@@ -8,8 +8,6 @@
 </div>
 
 <script>
-  // This is a test of the Svelte framework to evaluate how it can be integrated with other frameworks
-
   // Create a map of all the stylesheets, so we can enable one of them and disable the others
   let ssMap = new Map();
 
@@ -25,7 +23,17 @@
     const matching = styleBlocksArray
       .filter(sheet => (sheet.textContent || '').indexOf(searchText) > -1);
 
-    return (matching.length === 1) ? matching : null; // We can match multiple <style> elements. handle this case inside setSelected()
+    return matching.length ? matching : null; // We can match multiple <style> elements. handle this case inside setSelected()
+  }
+
+  // PolyFill NodeList.forEach if necessary
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+      thisArg = thisArg || window;
+      for (var i = 0; i < this.length; i++) {
+        callback.call(thisArg, this[i], i, this);
+      }
+    };
   }
 
   export default {
@@ -41,7 +49,7 @@
           // v2.1 behaviour means that a stylesheet can also be in a <style> tag.
           if (sheet.linkHrefContains) {
             // <link> elements must be inside the <head> element. This also makes unit testing easier (as we can just mock document.head.querySelector)
-            ssMap.set(sheet.label, document.head.querySelector(`link[rel="stylesheet"][href*="${sheet.linkHrefContains}"]`));
+            ssMap.set(sheet.label, document.head.querySelectorAll(`link[rel="stylesheet"][href*="${sheet.linkHrefContains}"]`));
           } else if (sheet.styleElemContains) {
             ssMap.set(sheet.label, findStyleRuleContainingText(styleBlocksArr, sheet.styleElemContains));
           } else {
