@@ -159,8 +159,7 @@ if (false) {
     speed: 500, // Integer. How fast to complete the scroll in milliseconds
     easing: 'easeInOutCubic', // Easing pattern to use
     offset: 40, // Integer. How far to offset the scrolling anchor location in pixels
-    updateURL: true // Boolean. If true, update the URL hash on scroll
-  });
+    updateURL: true });
 
   // Add label to code blocks
   var LANGUAGE_TYPES = {
@@ -16765,4 +16764,4 @@ module.exports = __webpack_require__(9);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=theme.a04d8e7c.bundle.js.map
+//# sourceMappingURL=theme.d9d1a7bc.bundle.js.map
