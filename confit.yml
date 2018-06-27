@@ -55,6 +55,8 @@ generator-confit:
         - ./modules/testHarness/styles/light.styl
       dark:
         - ./modules/testHarness/styles/dark.styl
+      dark2:
+        - ./modules/testHarness/styles/dark2.styl
       component:
         - ./modules/stylesheetSwitcher/stylesheetSwitcher.html
   serverDev:

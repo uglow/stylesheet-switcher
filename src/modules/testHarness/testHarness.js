@@ -10,6 +10,7 @@ let comp = new StyleSheetSwitcher({
     stylesheets: [
       {label: 'Dark Link Element', linkHrefContains: 'dark'},
       {label: 'Light Link Element', linkHrefContains: 'light'},
+      // These <style> blocks are inside index-template.html:
       {label: 'Red Style Element', styleElemContains: '/* red-style */'},
       {label: 'Green Style Element', styleElemContains: '/* green-style */'},
     ],

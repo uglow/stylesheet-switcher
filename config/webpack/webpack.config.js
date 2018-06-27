@@ -149,6 +149,9 @@ function mergeConfig(mergeOptions) {
     'dark': [
       './modules/testHarness/styles/dark.styl'
     ],
+    'dark2': [
+      './modules/testHarness/styles/dark2.styl'
+    ],
     'component': [
       './modules/stylesheetSwitcher/stylesheetSwitcher.html'
     ]
