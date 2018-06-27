@@ -1,7 +1,7 @@
 {
   "name": "stylesheet-switcher",
   "version": "0.0.0-development",
-  "description": "A simple JS component for switching between a list of stylesheets on a website",
+  "description": "A JavaScript component for switching between a list of stylesheets on a website",
   "license": "MIT",
   "repository": {
     "type": "git",
