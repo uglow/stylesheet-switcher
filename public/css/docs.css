@@ -1,0 +1,86 @@
+:root {
+  --primary-fg-color: #333;
+  --primary-bg-color: #fff;
+  --code-bg-color: #eee;
+  --table-outer-border: #ddd;
+  --table-inner-border: #ccc;
+  --table-header-bg: #f1f1f1;
+  --table-stripe-bg: #f8f8f8;
+}
+
+html, body {
+  font-family: "Open Sans", sans-serif;
+  color: var(--primary-fg-color);
+  background-color: var(--primary-bg-color);
+  margin: 20px;
+}
+
+/* Github element */
+.github-link {
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  border-style: solid;
+  border-width: 70px 70px 0 0;
+  border-color: var(--primary-fg-color) transparent transparent transparent;
+}
+
+.github-link a {
+  position: fixed;
+  top: 4px;
+  left: 4px;
+}
+
+
+/* Top-right style switcher - fixed */
+.fixed-top-right {
+  position: fixed;
+  z-index: 99999;
+  right: 0;
+  top: 0;
+  background: var(--primary-bg-color);
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: rgba(0,0,0,0.2) -2px 2px 10px;
+}
+
+.fixed-top-right label {
+  display: inline;
+  color: var(--primary-fg-color);;
+}
+
+/* Pre formatting */
+pre {
+  background-color: var(--code-bg-color);
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Table */
+.table {
+  max-width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  border: 1px solid var(--table-outer-border);
+  width: 100%;
+  margin: 10px 0;
+}
+
+.table thead th, .table tbody td {
+  padding: 6px 13px;
+  border: 1px solid var(--table-inner-border);
+}
+.table thead th {
+  background-color: var(--table-header-bg);
+}
+
+.table tbody tr {
+  border-top: 1px solid var(--table-inner-border);
+}
+
+.table.striped tbody tr:nth-child(2n) {
+  background-color: var(--table-stripe-bg);
+  border-top: 1px solid var(--table-inner-border);
+}

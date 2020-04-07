@@ -1,7 +1,16 @@
 node_modules/
-dev/
-dist/css/
-dist/*.html
-dist/js/testHarness.*
-reports/
-webdocs/
+
+# Test reports
+test-reports/
+
+# Keep .gitkeep files
+# +----------------------------+-------------------------------+
+# | To keep an empty directory, add a .gitkeep file to it      |
+# | and ignore the directory with a wildcard:                  |
+# |                                                            |
+# |     /path/to/dir/*                                         |
+# |                                                            |
+# | This will ignore the content but not the directory itself. |
+# +------------------------------------------------------------+
+!/**/.gitkeep
+

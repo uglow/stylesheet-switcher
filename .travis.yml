@@ -2,7 +2,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - '8'
+  - '10'
 
 matrix:
   fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
@@ -39,7 +39,7 @@ script:
   - npm run build
 
 after_success:
-  #- npm run upload-coverage  # disabled due to tests being disabled
+  - npm run upload-coverage  # disabled due to tests being disabled
   - npm run travis-deploy-once "npm run semantic-release"
 
 branches:
