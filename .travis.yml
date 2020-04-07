@@ -20,10 +20,6 @@ addons:
     packages:
       - g++-4.8
 
-before_install:
-  - npm prune
-  - npm set progress=false
-
 install:
   - npm install
 
@@ -39,8 +35,9 @@ script:
   - npm run build
 
 after_success:
-  - npm run upload-coverage  # disabled due to tests being disabled
+  - npm run upload-coverage
   - npm run travis-deploy-once "npm run semantic-release"
+  - npm run docs:publish
 
 branches:
   except:

@@ -19,7 +19,6 @@
     "serve": "sirv public",
     "build": "rollup -c --silent",
     "docs:publish": "node config/docs/publish.js",
-    "deploy": "npm-run-all build ",
     "test": "npm-run-all test:report",
     "test:unit": "jest --no-cache",
     "test:report": "jest --no-cache --coverage --json --outputFile=test-reports/unit/unit.json",
