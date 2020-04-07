@@ -1,6 +1,5 @@
 'use strict';
 
-// START_CONFIT_GENERATED_CONTENT
 const path = require('path');
 const basePath = path.join(__dirname, '/../');
 const ghpages = require('gh-pages');
@@ -30,11 +29,7 @@ if (process.env.GH_TOKEN) {
     name: 'GH Pages Committer'
   };
 }
-// END_CONFIT_GENERATED_CONTENT
 
-
-// START_CONFIT_GENERATED_CONTENT
 ghpages.publish(docOutputDir, options, callback);
 
-// END_CONFIT_GENERATED_CONTENT
 
