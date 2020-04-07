@@ -1,0 +1,7 @@
+# .prettierrc
+tabWidth: 2
+printWidth: 120
+singleQuote: true
+trailingComma: es5
+plugins:
+  - 'prettier-plugin-svelte'

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Stylesheet Switcher</title>
+
+    <link rel="icon" href="favicon.ico">
+
+    <!-- Die frame! DIE! http://en.wikipedia.org/wiki/Framekiller -->
+    <style>
+      html {
+        display: none;
+      }
+    </style>
+    <script>
+      if (window.self !== window.top) {
+        window.top.location.href = window.location.href;
+      } else {
+        document.documentElement.style.display = 'block';
+      }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+
+    <!-- Base stylesheet for site documentation -->
+    <link rel="stylesheet" href="css/docs.css" />
+
+    <!-- StylesheetSwitcher works with <link> elements -->
+    <link rel="stylesheet" href="css/light.css" />
+    <link rel="stylesheet" href="css/dark.css" />
+    <link rel="stylesheet" href="css/dark2.css" />
+
+    <!-- SSwitcher can also work with <style> blocks -->
+    <style>
+      /* red-style */
+      html, body {
+        background-color: #000;
+        color: #f00;
+      }
+
+      h1 {
+        color: #f00;
+      }
+    </style>
+
+    <style>
+      /* green-style */
+      body {
+        background: #fff;
+        color: #0f0;
+      }
+
+      h1 {
+        color: #0f0;
+      }
+    </style>
+
+    <style>
+      /* Second red-style block */
+      /* red-style */
+      p {
+        color: #800;
+      }
+    </style>
+
+    <style>
+      /* Second green-style block */
+      /* green-style */
+      p {
+        color: #080;
+      }
+    </style>
+
+    <!-- The component script -->
+    <script src="dist/sss.js"></script>
+  </head>
+
+  <body>
+    <div class="fixed-top-right"></div>
+
+    <h1>Stylesheet Switcher (SSS)</h1>
+
+    <p>SSS is a JS component that can "switch" between a list of stylesheets.</p>
+    <p><a href="https://github.com/uglow/stylesheet-switcher">GitHub Repo</a></p>
+    <div class="github-link"><a href="https://github.com/uglow/stylesheet-switcher" target="_blank"><img src="github.svg" alt="Github logo"></a></div>
+
+    <h2>Demo</h2>
+
+    <div class="inline-component"></div>
+
+    <p>You can also hide the UI and change the style sheet programmatically:
+      <label><input type="radio" name="themeGrp" value="Dark Link Element" onclick="headlessComponent.setSelected(this.value)"> Dark </label>
+      <label><input type="radio" name="themeGrp" value="Light Link Element" onclick="headlessComponent.setSelected(this.value)"> Light </label>
+    </p>
+
+    <h2>How it works</h2>
+
+    When this component loads, it finds all of the &lt;style&gt; and &lt;link rel="stylesheet" href="..."&gt; elements. Then,
+    filters this list to just the ones that contain the URL (for &lt;link&gt; elements) or text (for &lt;style&gt; elements).
+    Then it disables all of them, except for the one that is selected.
+
+
+    <h2>Usage</h2>
+
+    <p>To include the component via a <strong>script</strong> element in a HTML page:</p>
+
+    <p>Copy the <a href="https://github.com/uglow/stylesheet-switcher/tree/master/public/build/sss.js">script</a> into your project folder. Then edit your HTML to include the following:</p>
+
+    <code><pre>
+&lt;!-- The element which will host the stylesheet switcher -->
+&lt;div class="component-class">&lt;/div>
+
+&lt;!-- The component script, which creates a StylesheetSwitcher property which can be instantiated: -->
+&lt;script src="path/to/stylesheet-switcher/public/build/sss.js">&lt;/script>
+
+&lt;script>
+//
+const stylesheets = [
+  // These are &lt;link href= elements
+  { label: 'Dark Link Element', linkHrefContains: 'dark' }, // includes both dark.css and dark2.css
+  { label: 'Light Link Element', linkHrefContains: 'light' },
+  // These are references to &lt;style&gt; blocks
+  { label: 'Red Style Element', styleElemContains: '/* red-style */' },
+ { label: 'Green Style Element', styleElemContains: '/* green-style */' },
+];
+
+// Instance of the fixed-top-right Stylesheet component
+let sss = new StylesheetSwitcher({
+  target: document.querySelector('.component-class'),
+  props: {
+    id: 'mySSS',
+    label: 'Theme:',
+    stylesheets,
+  },
+});
+&lt;/script></pre></code>
+
+    <p>To include the component as a Svelte component within another Svelte component:</p>
+
+    <p>Install the NPM package into your existing NPM project: <code><pre>npm install stylesheet-switcher</pre></code></p>
+
+    <p>Then inside your parent Svelte component:</p>
+    <code><pre>import stylesheetSwitcher from 'stylesheet-switcher';</pre></code>
+
+    <h2>Component Props</h2>
+
+    <table class="table striped">
+      <thead>
+        <tr>
+          <th>Param</th>
+          <th>Type</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>stylesheets</td>
+          <td>Object[]</td>
+          <td>
+            <p>List of stylesheets to switch between. These <em>must</em> be inside the &lt;head&gt; element.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>stylesheets[].label</td>
+          <td>string</td>
+          <td><p>The display name of the stylesheet</p></td>
+        </tr>
+
+        <tr>
+          <td>stylesheets[].linkHrefContains</td>
+          <td>string</td>
+          <td>
+            <p>
+              A string that should appear withing the &lt;link href="..."&gt; attribute. Used to identify the
+              <link /> element(s) that the component should enable and disable
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>stylesheets[].styleElemContains</td>
+          <td>string</td>
+          <td>
+            <p>
+              A string that should appear withing &lt;style&gt; element(s). Best practice would be to include a comment
+              at the top of the &lt;style&gt; element's content.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>id</td>
+          <td>(optional) string</td>
+          <td>
+            <p>Id attribute of the component (in case you need to use multiple instances on the same page)</p>
+
+            <p><em>(default: mySSS)</em></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>label</td>
+          <td>(optional) string</td>
+          <td>
+            <p>Label to display beside the component</p>
+            <p><em>(default: Theme)</em></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>persistenceKeyName</td>
+          <td>(optional) string</td>
+          <td>
+            <p>SessionStorage key name to persist selected option</p>
+            <p><em>(default: __stylesheetSwitcher)</em></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>showUI</td>
+          <td>(optional) boolean</td>
+          <td>
+            <p>Whether to display a user interface for the switcher. Set this to false to provide your own UI.</p>
+            <p><em>(default: true)</em></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>setSelected()</td>
+          <td>Function</td>
+          <td><p>Sets the selected value</p></td>
+        </tr>
+
+        <tr>
+          <td>getSelected()</td>
+          <td>Function</td>
+          <td><p>Returns the selected value (the label of the selected stylesheet)</p></td>
+        </tr>
+
+        <tr>
+          <td>selectionChange</td>
+          <td>event</td>
+          <td>
+            <p>
+              Returns an object with a <code>value</code> property set to the <code>label</code> of the selected
+              stylesheet
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      const stylesheets = [
+        // These are <link href= elements
+        { label: 'Dark Link Element', linkHrefContains: 'dark' }, // includes both dark.css and dark2.css
+        { label: 'Light Link Element', linkHrefContains: 'light' },
+        // These <style> blocks are inside the <head> element (above):
+        { label: 'Red Style Element', styleElemContains: '/* red-style */' },
+        { label: 'Green Style Element', styleElemContains: '/* green-style */' },
+      ];
+
+      // Instance of the fixed-top-right Stylesheet component
+      let headerComponent = new StylesheetSwitcher({
+        target: document.querySelector('.fixed-top-right'),
+        props: {
+          id: 'headerSSS',
+          label: 'Theme:',
+          stylesheets,
+        },
+      });
+
+      // Instance of the fixed-top-right Stylesheet component
+      let inlineComponent = new StylesheetSwitcher({
+        target: document.querySelector('.inline-component'),
+        props: {
+          id: 'inlineSSS',
+          label: 'Choose a theme:',
+          stylesheets,
+        },
+      });
+
+      // Headless component
+      let headlessComponent = new StylesheetSwitcher({
+        target: document.body,
+        props: {
+          showUI: false,
+          stylesheets,
+        },
+      });
+
+      // Keep the components in-sync (because, well, we can)
+      headerComponent.$on('selectionChange', event => {
+        console.log(event.detail.value);
+        inlineComponent.setSelected(event.detail.value);
+      });
+
+      inlineComponent.$on('selectionChange', event => {
+        console.log(event.detail.value);
+        headerComponent.setSelected(event.detail.value);
+      });
+
+      headlessComponent.$on('selectionChange', event => {
+        console.log(event.detail.value);
+        inlineComponent.setSelected(event.detail.value);
+        headerComponent.setSelected(event.detail.value);
+      });
+
+    </script>
+  </body>
+</html>
