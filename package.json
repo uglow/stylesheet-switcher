@@ -7,10 +7,10 @@
     "type": "git",
     "url": "https://github.com/uglow/stylesheet-switcher.git"
   },
-  "main": "",
+  "main": "public/dist/sss.js",
   "svelte": "src/stylesheetSwitcher/stylesheetSwitcher.svelte",
   "files": [
-    "public/build",
+    "public",
     "src",
     "*.md"
   ],
